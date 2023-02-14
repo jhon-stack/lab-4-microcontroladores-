@@ -36,16 +36,18 @@ echo "  > Compilando un ejemplo para configurar biblioteca"
 ln -sf /home/alexvarela/Videos/Lab_4/lab-4-microcontroladores-/libopencm3-examples/examples/stm32/f4/stm32f429i-discovery/random random
 cd random
 make
-rm -rf random
+st-flash write random.bin  0x8000000
 cd ..
+rm -rf random
+
 echo "  > Compilando el  proyecto del sismografo"
 echo "  > Dirrigiendo a carpeta src"
-cd src/src
+cd src
 echo "  > Limpiando entorno"
 make clean
 echo "  > Haciendo make"
 make
-echo "  > Generando spi-mems.bin"
+echo "  > Generando lcd-serial.bin"
 st-flash write lcd-serial.bin  0x8000000
 cd ..
 
