@@ -19,21 +19,16 @@ cp -f src/Makes/Makefile libopencm3-examples/
 cp -f src/Makes/rules.mk libopencm3-examples/examples
 rm -rf src/Makes
 
-echo "  > Instalar compilador"
-sudo apt install gcc-arm-embedded
-echo "  > ver la version compilador"
-arm-none-eabi-gcc --version
-
 echo "Configurando para el laboratorio 4:"
 echo "  > creando directorio de trabajo"
 cp -rf src libopencm3-examples/examples/stm32/f4/stm32f429i-discovery/
 rm -rf src
 
 echo "  > Creando enlace Simbolico"
-ln -sf /home/alexvarela/Videos/Lab_4/lab-4-microcontroladores-/libopencm3-examples/examples/stm32/f4/stm32f429i-discovery/src src
+ln -sf libopencm3-examples/examples/stm32/f4/stm32f429i-discovery/src src
 
 echo "  > Compilando un ejemplo para configurar biblioteca"
-ln -sf /home/alexvarela/Videos/Lab_4/lab-4-microcontroladores-/libopencm3-examples/examples/stm32/f4/stm32f429i-discovery/random random
+ln -sf libopencm3-examples/examples/stm32/f4/stm32f429i-discovery/random random
 cd random
 make
 st-flash write random.bin  0x8000000
