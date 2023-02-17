@@ -1,0 +1,44 @@
+Este proyecto se basa en ejemplos del proyecto libopencm3 proporcionados por:
+* Derechos de autor (C) 2014 Karl Palsson <Karlp@tweak.net.au>. que establece
+licencia para su uso libre de modificación y .
+
+El proyecto en especifico toma 4 ejemplos y se modifican para generar el codigo 
+que proporciona la lectura de los ejes del giroscopio configurando un Sismografo,
+implementado sobre la placa STM32F429 Discovery kit donde sin implementar el circuito
+externo diseñado para el proyecto, un usuario común lo que vera en la pantalla LCD es:
+
+1. Nivel de batería
+2. Los valores de los ejes X,Y,Z 
+3. Si la comunicación serial/USB esta habilitada (ON/OFF)
+
+Sobre la estructura del código y los ejemplos tomados, se detalla en la lista siguiente:
+
+De la carpeta F4:
+1. Ejemplo adc-dac-printf.c
+				static void adc_setup(void){}
+				static uint16_t read_adc_naiive(uint8_t channel){}
+2. Ejemplo spi-mems.c
+  				int print_decimal(int num){}
+3. Ejemplo lcd-serial.c
+				int main(void) {}
+
+De la carpeta F3:
+1. Ejemplo spi.c 
+				static void spi_setup(void){}
+				static void usart_setup(void){}
+				static void gpio_setup(void){}
+				gyro read_xyz(void){} 
+
+
+Por último, este proyecto cuenta con un archivo de fuente llamado Entorno que configura 
+la obtención de todos los archivos necesarios de la biblioteca y los fuentes creados 
+para el proyecto y también ejecuta los comandos necesarios para implementar el proyecto 
+directo sobre la placa STM32F429 Discovery kit, solo debe asegurarse 2 cosas:
+
+1. Paso 1:  Conectar la placa antes de la corrida del archivo Entorno.
+2. Paso 2:  correr el archivo Entorno comando: source Entorno
+
+
+ 
+
+	
