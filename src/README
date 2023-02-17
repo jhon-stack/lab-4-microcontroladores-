@@ -1,6 +1,6 @@
 Este proyecto se basa en ejemplos del proyecto libopencm3 proporcionados por:
 * Derechos de autor (C) 2014 Karl Palsson <Karlp@tweak.net.au>. que establece
-licencia para su uso libre de modificación y .
+licencia para su uso libre para redistribuirla y/o modificarla.
 
 El proyecto en especifico toma 4 ejemplos y se modifican para generar el codigo 
 que proporciona la lectura de los ejes del giroscopio configurando un Sismografo,
