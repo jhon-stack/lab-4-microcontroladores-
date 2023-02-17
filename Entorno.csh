@@ -42,9 +42,9 @@ echo "  > Limpiando entorno"
 make clean
 echo "  > Haciendo make"
 make
-echo "  > Generando lcd-serial.bin"
-st-flash write lcd-serial.bin  0x8000000
+echo "  > Generando Sismografo.bin"
+st-flash write Sismografo.bin  0x8000000
 cd ..
 
-
+echo "  > FALTA AGREGAR LO DE IOT"
 
