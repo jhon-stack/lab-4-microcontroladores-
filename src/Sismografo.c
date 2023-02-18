@@ -3,12 +3,86 @@
 #include <string.h> 
 #include <stdint.h>
 #include <math.h>
+#include <unistd.h>
+#include <errno.h>
 // Agregamos para el uso de bibliotecas de proyecto libopencm3
 #include "clock.h"
 #include "console.h"
 #include "sdram.h"
 #include "lcd-spi.h"
 #include "gfx.h"
+
+#include <libopencm3/stm32/adc.h>
+#include <libopencm3/stm32/rcc.h>
+#include <libopencm3/stm32/gpio.h>
+#include <libopencm3/stm32/spi.h>
+
+
+/* Funcion para imprimir numeros enteros a la consola 
+Tomada de SPI- F4 */
+int print_decimal(int);
+
+/*
+ * int len = print_decimal(int value)
+ *
+ * Very simple routine to print an integer as a decimal
+ * number on the console.
+ */
+int
+print_decimal(int num)
+{
+	int		ndx = 0;
+	char	buf[10];
+	int		len = 0;
+	char	is_signed = 0;
+
+	if (num < 0) {
+		is_signed++;
+		num = 0 - num;
+	}
+	buf[ndx++] = '\000';
+	do {
+		buf[ndx++] = (num % 10) + '0';
+		num = num / 10;
+	} while (num != 0);
+	ndx--;
+	if (is_signed != 0) {
+		console_putc('-');
+		len++;
+	}
+	while (buf[ndx] != '\000') {
+		console_putc(buf[ndx--]);
+		len++;
+	}
+	return len; /* number of characters printed */
+}
+
+
+/*funcion que configura el ADC (convertidor analogico-digital) en el microcontrolador*/
+static void adc_setup(void)
+{
+	gpio_mode_setup(GPIOA, GPIO_MODE_ANALOG, GPIO_PUPD_NONE, GPIO0);
+	gpio_mode_setup(GPIOA, GPIO_MODE_ANALOG, GPIO_PUPD_NONE, GPIO1);
+
+	adc_power_off(ADC1);
+	adc_disable_scan_mode(ADC1);
+	adc_set_sample_time_on_all_channels(ADC1, ADC_SMPR_SMP_3CYC);
+
+	adc_power_on(ADC1);
+
+}
+
+/* Funcion para lectura del valor analogico en el pin seleccionado por canal ADC1 */
+static uint16_t read_adc_naiive(uint8_t channel)
+{
+	uint8_t channel_array[16];
+	channel_array[0] = channel;
+	adc_set_regular_sequence(ADC1, 1, channel_array);
+	adc_start_conversion_regular(ADC1);
+	while (!adc_eoc(ADC1));
+	uint16_t reg16 = adc_read_regular(ADC1);
+	return reg16;
+}
 
 
 int main(void)
