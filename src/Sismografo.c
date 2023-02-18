@@ -16,6 +16,95 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/spi.h>
+#include <libopencm3/stm32/usart.h>
+
+
+//Se crea estructura giroscopio, almacena y manipular los datos de lectura
+typedef struct Giroscopio  {
+  int16_t x; // lectura de un eje x 16 bits
+  int16_t y; // lectura de un eje y 16 bits
+  int16_t z; // lectura de un eje z 16 bits
+} gyro;
+
+/*funcion configura una interfaz SPI para comunicarse con el giroscopio*/
+static void spi_setup(void)
+{
+	rcc_periph_clock_enable(RCC_SPI1);
+	/* For spi signal pins */
+	rcc_periph_clock_enable(RCC_GPIOA);
+	/* For spi mode select on the l3gd20 */
+	rcc_periph_clock_enable(RCC_GPIOE);
+
+	/* Setup GPIOE3 pin for spi mode l3gd20 select. */
+	gpio_mode_setup(GPIOE, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO3);
+	/* Start with spi communication disabled */
+	gpio_set(GPIOE, GPIO3);
+
+	/* Setup GPIO pins for AF5 for SPI1 signals. */
+	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE,
+			GPIO5 | GPIO6 | GPIO7);
+	gpio_set_af(GPIOA, GPIO_AF5, GPIO5 | GPIO6 | GPIO7);
+
+	//spi initialization;
+	spi_set_master_mode(SPI1);
+	spi_set_baudrate_prescaler(SPI1, SPI_CR1_BR_FPCLK_DIV_64);
+	spi_set_clock_polarity_0(SPI1);
+	spi_set_clock_phase_0(SPI1);
+	spi_set_full_duplex_mode(SPI1);
+	spi_set_unidirectional_mode(SPI1); /* bidirectional but in 3-wire */
+	spi_set_data_size(SPI1, SPI_CR2_DS_8BIT);
+	spi_enable_software_slave_management(SPI1);
+	spi_send_msb_first(SPI1);
+	spi_set_nss_high(SPI1);
+	//spi_enable_ss_output(SPI1);
+	spi_fifo_reception_threshold_8bit(SPI1);
+	SPI_I2SCFGR(SPI1) &= ~SPI_I2SCFGR_I2SMOD;
+	spi_enable(SPI1);
+}
+
+/*Funcion configura la USART1 para transmit*/
+static void usart_setup(void)
+{
+	/* Enable clocks for GPIO port A (for GPIO_USART2_TX) and USART2. */
+	rcc_periph_clock_enable(RCC_USART2);
+	rcc_periph_clock_enable(RCC_GPIOA);
+
+	/* Setup GPIO pin GPIO_USART2_TX/GPIO9 on GPIO port A for transmit. */
+	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO2 | GPIO3);
+	gpio_set_af(GPIOA, GPIO_AF7, GPIO2| GPIO3);
+
+	/* Setup UART parameters. */
+	usart_set_baudrate(USART2, 115200);
+	usart_set_databits(USART2, 8);
+	usart_set_stopbits(USART2, USART_STOPBITS_1);
+	usart_set_mode(USART2, USART_MODE_TX_RX);
+	usart_set_parity(USART2, USART_PARITY_NONE);
+	usart_set_flow_control(USART2, USART_FLOWCONTROL_NONE);
+
+	/* Finally enable the USART. */
+	usart_enable(USART2);
+}
+
+/*funcion que toma lectura de 3 dimensiones del giroscopio  x, y y z. 
+ devuelve los valores en la estructura "gyro"*/
+gyro read_xyz(void);
+gyro read_xyz(void)
+{
+  // De la carpeta F3: 1. Ejemplo spi.c Hay ue agregar lo del ciclo while (1)
+}
+
+
+
+
+
+/* Funcion que configura los pines de los puertos GPIOs para uso en el microcontrolador */
+static void gpio_setup(void)
+{
+	rcc_periph_clock_enable(RCC_GPIOE);
+	gpio_mode_setup(GPIOE, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE,
+		GPIO8 | GPIO9 | GPIO10 | GPIO11 | GPIO12 | GPIO13 |
+		GPIO14 | GPIO15);
+}
 
 
 /* Funcion para imprimir numeros enteros a la consola 
