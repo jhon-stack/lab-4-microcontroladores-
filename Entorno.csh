@@ -64,3 +64,13 @@ if [ $? -eq 148 ]; then
     echo "Gracias por usar la plataforma de Thinsboard"
     kill $$
 fi
+echo "Eliminar proceso de Thingsboard"
+jobs -l
+
+# Matar todo
+echo "Terminando de enviar datos."
+for job in `jobs -l | awk '{print $2}'`; do
+    kill $job
+done
+
+echo "Se ha detenido el programa, por favor descomecte la tarjeta"
