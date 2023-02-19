@@ -73,4 +73,5 @@ for job in `jobs -l | awk '{print $2}'`; do
     kill $job
 done
 
-echo "Se ha detenido el programa, por favor descomecte la tarjeta"
+echo "Se ha detenido el programa, por favor desconecte la tarjeta"
+kill -9 `jobs -ps`
