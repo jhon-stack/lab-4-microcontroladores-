@@ -35,8 +35,9 @@ la obtención de todos los archivos necesarios de la biblioteca y los fuentes cr
 para el proyecto y también ejecuta los comandos necesarios para implementar el proyecto 
 directo sobre la placa STM32F429 Discovery kit, solo debe asegurarse 2 cosas:
 
-1. Paso 1:  Conectar la placa antes de la corrida del archivo Entorno.
-2. Paso 2:  correr el archivo Entorno comando: source Entorno
+1. Conectar la placa antes de la corrida del archivo Entorno.
+2. Correr el archivo Entorno comando: source Entorno.
+3. Para cerrar el programa pro favor presionar CTRL + Z y seguir las instrucciones.
 
 
  
