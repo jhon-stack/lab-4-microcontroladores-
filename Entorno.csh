@@ -47,5 +47,5 @@ st-flash write Sismografo.bin  0x8000000
 cd ..
 
 #Aqui el usuario debe especificar la ruta antes del directorio del repositorio.
-echo " > Por favor agite el  STM32F29I Discovery kit y visite iot.eie.ucr.ac.cr para ver le estado del giroscopio y la bateria en la plataforma Thingsboard"
-pytho3 ~/Documents/lab-microcontroladores/laboratorio_4/lab-4-microcontroladores-/src/mqtt_publish.py
+echo " > Por favor agite el  STM32F29I Discovery kit y visite iot.eie.ucr.ac.cr para ver el estado del giroscopio y la bateria en la plataforma Thingsboard"
+python3 ~/Documents/lab-microcontroladores/laboratorio_4/lab-4-microcontroladores-/src/mqtt_publish.py
