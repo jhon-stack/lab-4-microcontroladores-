@@ -46,6 +46,6 @@ echo "  > Generando Sismografo.bin"
 st-flash write Sismografo.bin  0x8000000
 cd ..
 
-echo "  > FALTA AGREGAR LO DE IOT"
+#Aqui el usuario debe especificar la ruta antes del directorio del repositorio.
 
 Python3 ~/Documents/lab-microcontroladores/laboratorio_4/lab-4-microcontroladores-/src/mqtt_publish.py
