@@ -51,10 +51,11 @@ echo " > Por favor agite el  STM32F29I Discovery kit y visite iot.eie.ucr.ac.cr 
 python3 ~/Documents/lab-microcontroladores/laboratorio_4/lab-4-microcontroladores-/src/mqtt_publish.py
 
 
-echo "Script is running..."
+echo "El script sigue corriendo"
 while true; do
-    echo "Loop iteration..."
+    echo "Por favor presione CTRL+Z para detener el proceso"
     sleep 1
+    kill $!
 done
 
 # Stdio del teclado para detener el proceso, si se detiene, lo mata de una vez y asi no queda en el cache
