@@ -48,3 +48,4 @@ cd ..
 
 echo "  > FALTA AGREGAR LO DE IOT"
 
+Python3 ~/Documents/lab-microcontroladores/laboratorio_4/lab-4-microcontroladores-/src/mqtt_publish.py
